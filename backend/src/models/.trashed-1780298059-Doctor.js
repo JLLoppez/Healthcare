@@ -7,14 +7,6 @@ const AvailabilitySlotSchema = new mongoose.Schema({
   isAvailable: { type: Boolean, default: true }
 }, { _id: false });
 
-// ─── NEW: Certificate document schema ─────────────────────────────────────────
-const CertificateDocumentSchema = new mongoose.Schema({
-  name: { type: String, required: true },       // e.g. "Medical License"
-  url: { type: String, required: true },        // Cloudinary URL
-  publicId: String,                             // Cloudinary public_id for deletion
-  uploadedAt: { type: Date, default: Date.now },
-}, { _id: true });
-
 const DoctorSchema = new mongoose.Schema({
   user: {
     type: mongoose.Schema.ObjectId,
@@ -34,13 +26,6 @@ const DoctorSchema = new mongoose.Schema({
     ]
   },
   subSpecializations: [String],
-
-  // ─── NEW: Conditions the doctor treats ───────────────────────────────────────
-  conditionsTreated: {
-    type: [String],
-    default: [],
-  },
-
   licenseNumber: {
     type: String,
     required: [true, 'Please add a license number'],
@@ -63,15 +48,6 @@ const DoctorSchema = new mongoose.Schema({
     year: Number,
     expiry: Date
   }],
-
-  // ─── NEW: Uploaded certificate documents ─────────────────────────────────────
-  certificateDocuments: [CertificateDocumentSchema],
-
-  // ─── NEW: Verification tracking ──────────────────────────────────────────────
-  // isVerified becomes true automatically when certificateDocuments.length > 0
-  // OR when an admin manually verifies
-  certificatesSubmittedAt: Date,  // timestamp when doctor first uploaded certs
-
   languages: [String],
   bio: {
     type: String,
@@ -126,23 +102,16 @@ const DoctorSchema = new mongoose.Schema({
   toObject: { virtuals: true }
 });
 
-// ─── Virtual: profile is "verified" if certs submitted OR admin approved ──────
-DoctorSchema.virtual('profileVerified').get(function () {
-  return this.isVerified || (this.certificateDocuments && this.certificateDocuments.length > 0);
-});
-
 // Indexes
 DoctorSchema.index({ specialization: 1 });
 DoctorSchema.index({ averageRating: -1 });
 DoctorSchema.index({ consultationFee: 1 });
 DoctorSchema.index({ isVerified: 1, isAcceptingPatients: 1 });
 DoctorSchema.index({ 'hospital.city': 1 });
-DoctorSchema.index({ conditionsTreated: 1 });
 DoctorSchema.index({
   specialization: 'text',
   bio: 'text',
-  tags: 'text',
-  conditionsTreated: 'text',
+  tags: 'text'
 });
 
 module.exports = mongoose.model('Doctor', DoctorSchema);

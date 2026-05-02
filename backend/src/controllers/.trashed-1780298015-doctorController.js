@@ -8,7 +8,7 @@ exports.getDoctors = async (req, res, next) => {
   try {
     const {
       specialization, minRating, maxFee, minFee, city,
-      isAcceptingPatients, telemedicine, search, condition,
+      isAcceptingPatients, telemedicine, search,
       sort = '-averageRating', page = 1, limit = 12
     } = req.query;
 
@@ -23,8 +23,6 @@ exports.getDoctors = async (req, res, next) => {
     if (city) filter['hospital.city'] = { $regex: city, $options: 'i' };
     if (isAcceptingPatients === 'true') filter.isAcceptingPatients = true;
     if (telemedicine === 'true') filter.telemedicineEnabled = true;
-    // NEW: filter by condition treated
-    if (condition) filter.conditionsTreated = { $regex: condition, $options: 'i' };
 
     let query = Doctor.find(filter).populate('user', 'name email avatar phone');
 
@@ -35,6 +33,7 @@ exports.getDoctors = async (req, res, next) => {
         .select({ score: { $meta: 'textScore' } })
         .sort({ score: { $meta: 'textScore' } });
     } else {
+      // Sort options
       const sortMap = {
         '-averageRating': '-averageRating',
         'rating': '-averageRating',
@@ -88,7 +87,6 @@ exports.createDoctorProfile = async (req, res, next) => {
     const existing = await Doctor.findOne({ user: req.user.id });
     if (existing) return next(new AppError('Doctor profile already exists', 400));
 
-    // conditionsTreated and subSpecializations come in as arrays from the body
     const doctor = await Doctor.create({ ...req.body, user: req.user.id });
     res.status(201).json({ success: true, data: doctor });
   } catch (err) {
@@ -108,32 +106,14 @@ exports.updateDoctorProfile = async (req, res, next) => {
       return next(new AppError('Not authorized', 403));
     }
 
-    // Protect sensitive fields from user update (admins can still set isVerified)
-    const disallowed = req.user.role === 'admin'
-      ? ['averageRating', 'totalReviews', 'totalPatients']
-      : ['isVerified', 'verifiedAt', 'verifiedBy', 'averageRating', 'totalReviews', 'totalPatients', 'certificateDocuments'];
-
+    // Protect sensitive fields from user update
+    const disallowed = ['isVerified', 'averageRating', 'totalReviews', 'totalPatients'];
     disallowed.forEach(f => delete req.body[f]);
 
     doctor = await Doctor.findByIdAndUpdate(req.params.id, req.body, {
       new: true,
       runValidators: true
     }).populate('user', 'name email avatar');
-
-    res.json({ success: true, data: doctor });
-  } catch (err) {
-    next(err);
-  }
-};
-
-// @desc    Get my doctor profile (for logged-in doctor)
-// @route   GET /api/doctors/me
-exports.getMyDoctorProfile = async (req, res, next) => {
-  try {
-    const doctor = await Doctor.findOne({ user: req.user.id })
-      .populate('user', 'name email avatar phone gender dateOfBirth');
-
-    if (!doctor) return next(new AppError('Doctor profile not found. Please create one.', 404));
 
     res.json({ success: true, data: doctor });
   } catch (err) {
@@ -162,6 +142,7 @@ exports.getDoctorAvailability = async (req, res, next) => {
       return res.json({ success: true, data: [], message: 'Doctor not available on this day' });
     }
 
+    // Generate slots
     const Appointment = require('../models/Appointment');
     const bookedAppointments = await Appointment.find({
       doctor: doctor._id,
@@ -226,17 +207,6 @@ exports.getSpecializations = async (req, res, next) => {
   try {
     const specializations = await Doctor.distinct('specialization', { isVerified: true });
     res.json({ success: true, data: specializations });
-  } catch (err) {
-    next(err);
-  }
-};
-
-// @desc    Get all unique conditions treated (for search/filter)
-// @route   GET /api/doctors/conditions
-exports.getConditions = async (req, res, next) => {
-  try {
-    const conditions = await Doctor.distinct('conditionsTreated', { isVerified: true });
-    res.json({ success: true, data: conditions.sort() });
   } catch (err) {
     next(err);
   }

@@ -4,14 +4,11 @@ const router = express.Router();
 const { protect, authorize } = require('../middleware/auth');
 const {
   getDoctors, getDoctor, createDoctorProfile, updateDoctorProfile,
-  getDoctorAvailability, getFeaturedDoctors, getSpecializations,
-  getMyDoctorProfile, getConditions,
+  getDoctorAvailability, getFeaturedDoctors, getSpecializations
 } = require('../controllers/doctorController');
 
 router.get('/featured', getFeaturedDoctors);
 router.get('/specializations', getSpecializations);
-router.get('/conditions', getConditions);                                    // NEW
-router.get('/me', protect, authorize('doctor'), getMyDoctorProfile);        // NEW
 router.get('/', getDoctors);
 router.get('/:id', getDoctor);
 router.get('/:id/availability', getDoctorAvailability);

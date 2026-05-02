@@ -38,10 +38,8 @@ export default api;
 export const doctorApi = {
   getAll: (params?: Record<string, any>) => api.get('/doctors', { params }),
   getOne: (id: string) => api.get(`/doctors/${id}`),
-  getMe: () => api.get('/doctors/me'),                                        // NEW
   getFeatured: () => api.get('/doctors/featured'),
   getSpecializations: () => api.get('/doctors/specializations'),
-  getConditions: () => api.get('/doctors/conditions'),                        // NEW
   getAvailability: (id: string, date: string) => api.get(`/doctors/${id}/availability`, { params: { date } }),
   create: (data: any) => api.post('/doctors', data),
   update: (id: string, data: any) => api.put(`/doctors/${id}`, data),

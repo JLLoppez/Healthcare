@@ -30,7 +30,6 @@ import ProfilePage from '@/pages/dashboard/ProfilePage';
 import PaymentsPage from '@/pages/dashboard/PaymentsPage';
 import AdminUsersPage from '@/pages/dashboard/AdminUsersPage';
 import AdminDoctorsPage from '@/pages/dashboard/AdminDoctorsPage';
-import DoctorProfileEditPage from '@/pages/dashboard/DoctorProfileEditPage'; // NEW
 
 import '@/styles/globals.css';
 
@@ -102,11 +101,6 @@ export default function App() {
             <Route path="prescriptions" element={<PrescriptionsPage />} />
             <Route path="payments" element={<PrivateRoute roles={['patient']}><PaymentsPage /></PrivateRoute>} />
             <Route path="profile" element={<ProfilePage />} />
-            {/* NEW: Doctor profile edit page */}
-            <Route
-              path="doctor/profile"
-              element={<PrivateRoute roles={['doctor']}><DoctorProfileEditPage /></PrivateRoute>}
-            />
           </Route>
 
           {/* Video call - full screen */}

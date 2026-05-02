@@ -1,8 +1,8 @@
 // pages/dashboard/DoctorDashboard.tsx
 import { useQuery } from '@tanstack/react-query';
 import { Link } from 'react-router-dom';
-import { Calendar, Users, Star, Clock, ArrowRight, CheckCircle, UserCog, Shield, AlertCircle } from 'lucide-react';
-import { appointmentApi, doctorApi } from '@/utils/api';
+import { Calendar, Users, Star, Clock, ArrowRight, CheckCircle } from 'lucide-react';
+import { appointmentApi } from '@/utils/api';
 import { useAuthStore } from '@/store/authStore';
 import { format } from 'date-fns';
 import { BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer, CartesianGrid } from 'recharts';
@@ -12,12 +12,9 @@ export function DoctorDashboard() {
   const { user } = useAuthStore();
   const { data: upcoming } = useQuery({ queryKey: ['upcoming-appointments'], queryFn: () => appointmentApi.getUpcoming().then(r => r.data.data) });
   const { data: allApts } = useQuery({ queryKey: ['appointments', {}], queryFn: () => appointmentApi.getAll({ limit: 100 }).then(r => r.data.data) });
-  const { data: myProfile } = useQuery({ queryKey: ['my-doctor-profile'], queryFn: () => doctorApi.getMe().then(r => r.data.data) });
 
   const completed = allApts?.filter((a: any) => a.status === 'completed').length || 0;
   const pending = allApts?.filter((a: any) => a.status === 'pending').length || 0;
-  const isVerified = myProfile?.isVerified || myProfile?.profileVerified || (myProfile?.certificateDocuments?.length > 0);
-  const certCount = myProfile?.certificateDocuments?.length || 0;
 
   const weeklyData = [
     { day: 'Mon', count: 3 }, { day: 'Tue', count: 5 }, { day: 'Wed', count: 2 },
@@ -31,53 +28,14 @@ export function DoctorDashboard() {
           <h1 className={styles.title}>Welcome, {user?.name?.split(' ').slice(1).join(' ') || user?.name} 👨‍⚕️</h1>
           <p className={styles.subtitle}>Your practice overview</p>
         </div>
-        <div style={{ display: 'flex', gap: 10, flexWrap: 'wrap' }}>
-          <Link to="/dashboard/doctor/profile" className="btn btn-secondary">
-            <UserCog size={16} /> Edit My Profile
-          </Link>
-          <Link to="/dashboard/appointments" className="btn btn-primary">
-            <Calendar size={16} /> View Schedule
-          </Link>
-        </div>
+        <Link to="/dashboard/appointments" className="btn btn-primary"><Calendar size={16} /> View Schedule</Link>
       </div>
-
-      {/* Verification notice */}
-      {!isVerified && (
-        <div style={{
-          padding: '14px 20px', borderRadius: 12, marginBottom: 20,
-          background: 'rgba(245,158,11,0.1)', border: '1px solid rgba(245,158,11,0.3)',
-          display: 'flex', alignItems: 'center', gap: 14,
-        }}>
-          <AlertCircle size={22} color="#f59e0b" />
-          <div style={{ flex: 1 }}>
-            <p style={{ fontWeight: 700, color: '#f59e0b', marginBottom: 2 }}>Your profile is not yet verified</p>
-            <p style={{ fontSize: 13, color: 'var(--text-secondary)' }}>Upload your certificates to show a verified badge to patients.</p>
-          </div>
-          <Link to="/dashboard/doctor/profile" className="btn btn-sm" style={{ background: 'rgba(245,158,11,0.2)', color: '#f59e0b', border: '1px solid rgba(245,158,11,0.4)', whiteSpace: 'nowrap' }}>
-            Upload Now
-          </Link>
-        </div>
-      )}
-
-      {isVerified && (
-        <div style={{
-          padding: '12px 20px', borderRadius: 12, marginBottom: 20,
-          background: 'rgba(0,245,160,0.08)', border: '1px solid rgba(0,245,160,0.2)',
-          display: 'flex', alignItems: 'center', gap: 12,
-        }}>
-          <Shield size={20} color="#00f5a0" />
-          <p style={{ fontSize: 14, color: '#00f5a0' }}>
-            <strong>Profile Verified</strong> · {certCount} certificate{certCount !== 1 ? 's' : ''} on file
-          </p>
-        </div>
-      )}
-
       <div className={styles.statsGrid}>
         {[
           { icon: Calendar, label: 'Upcoming', value: upcoming?.length || 0, color: '#00d4ff' },
           { icon: CheckCircle, label: 'Completed', value: completed, color: '#00f5a0' },
           { icon: Clock, label: 'Pending', value: pending, color: '#f59e0b' },
-          { icon: Star, label: 'Rating', value: myProfile?.averageRating?.toFixed(1) || '—', color: '#8b5cf6' },
+          { icon: Star, label: 'Rating', value: '4.9', color: '#8b5cf6' },
         ].map((s, i) => (
           <div key={i} className={styles.statCard}>
             <div className={styles.statIcon} style={{ background: `${s.color}18`, color: s.color }}><s.icon size={20} /></div>
@@ -85,30 +43,6 @@ export function DoctorDashboard() {
           </div>
         ))}
       </div>
-
-      {/* Specialization & Conditions quick view */}
-      {myProfile && (
-        <div className={styles.panel} style={{ marginBottom: 20 }}>
-          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 14 }}>
-            <h3 style={{ fontWeight: 700 }}>My Speciality &amp; Conditions Treated</h3>
-            <Link to="/dashboard/doctor/profile" style={{ fontSize: 13, color: 'var(--accent-primary)' }}>Edit →</Link>
-          </div>
-          <div style={{ display: 'flex', flexWrap: 'wrap', gap: 8 }}>
-            <span style={{ background: 'rgba(0,212,255,0.15)', color: '#00d4ff', borderRadius: 8, padding: '5px 12px', fontSize: 13, fontWeight: 700 }}>
-              {myProfile.specialization}
-            </span>
-            {(myProfile.conditionsTreated || []).slice(0, 10).map((c: string) => (
-              <span key={c} style={{ background: 'rgba(255,255,255,0.06)', borderRadius: 8, padding: '5px 12px', fontSize: 13, color: 'var(--text-secondary)' }}>
-                {c}
-              </span>
-            ))}
-            {(myProfile.conditionsTreated || []).length === 0 && (
-              <span style={{ fontSize: 13, color: 'var(--text-secondary)' }}>No conditions listed yet. <Link to="/dashboard/doctor/profile" style={{ color: 'var(--accent-primary)' }}>Add them →</Link></span>
-            )}
-          </div>
-        </div>
-      )}
-
       <div className={styles.grid2}>
         <div className={styles.panel}>
           <div className={styles.panelHeader}>
