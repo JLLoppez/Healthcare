@@ -410,18 +410,17 @@ async function seed() {
         ],
         // Certificate documents (simulated - in prod these would be Cloudinary URLs)
         certificateDocuments: [
-        certificateDocuments: [
-  {
-    name: 'Medical License',
-    url: `https://placeholder.com/${d.email}/license.pdf`,
-    uploadedAt: new Date(),
-  },
-  {
-    name: 'Board Certification',
-    url: `https://placeholder.com/${d.email}/board.pdf`,
-    uploadedAt: new Date(),
-  },
- ],
+         {
+          name: 'Medical License',
+          url: `https://placeholder.com/${d.email}/license.pdf`,
+          uploadedAt: new Date(),
+         },
+         {
+          name: 'Board Certification',
+          url: `https://placeholder.com/${d.email}/board.pdf`,
+         uploadedAt: new Date(),
+         },
+        ],
         averageRating: d.rating,
         totalReviews: d.reviews || Math.floor(Math.random() * 100) + 20,
         totalPatients: d.patients || Math.floor(Math.random() * 500) + 100,
