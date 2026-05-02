@@ -1,0 +1,84 @@
+# =========================
+# 🔐 ENV VARIABLES
+# =========================
+.env
+.env.*
+!.env.example
+
+# =========================
+# 📦 NODE (Backend + Frontend)
+# =========================
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# =========================
+# ⚛️ FRONTEND (Vite/React)
+# =========================
+frontend/node_modules/
+frontend/dist/
+frontend/.vite/
+frontend/.cache/
+
+# =========================
+# 🧠 BACKEND (Node/Express)
+# =========================
+backend/node_modules/
+backend/logs/
+backend/*.log
+
+# =========================
+# 🧪 TESTING
+# =========================
+coverage/
+.nyc_output/
+
+# =========================
+# 🧰 IDE / EDITORS
+# =========================
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# =========================
+# 💻 OS FILES
+# =========================
+.DS_Store
+Thumbs.db
+
+# =========================
+# 📁 UPLOADS / GENERATED FILES
+# =========================
+backend/uploads/
+frontend/uploads/
+public/uploads/
+
+# =========================
+# 🐳 DOCKER
+# =========================
+docker-compose.override.yml
+
+# =========================
+# 🔑 KEYS / SECRETS
+# =========================
+*.pem
+*.key
+*.crt
+
+# =========================
+# 📦 ARCHIVES
+# =========================
+*.zip
+*.tar
+*.gz
+*.rar
+
+# =========================
+# 🧹 MISC
+# =========================
+*.log
+*.tmp
+*.cache
