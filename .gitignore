@@ -82,3 +82,4 @@ docker-compose.override.yml
 *.log
 *.tmp
 *.cache
+.trashed-*
