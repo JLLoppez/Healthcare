@@ -1,0 +1,214 @@
+/* DoctorsPage.module.css */
+.page { min-height: 100vh; }
+
+.hero {
+  padding: calc(var(--nav-height) + 48px) 0 48px;
+  background: var(--bg-surface);
+  border-bottom: 1px solid var(--border-subtle);
+}
+
+.heroTitle { font-size: clamp(30px, 4vw, 48px); font-weight: 800; letter-spacing: -0.02em; margin-bottom: 10px; }
+.heroSubtitle { color: var(--text-secondary); font-size: 16px; margin-bottom: 28px; }
+
+.searchWrap {
+  display: flex;
+  align-items: center;
+  background: var(--bg-card);
+  border: 1px solid var(--border-default);
+  border-radius: var(--radius-xl);
+  padding: 12px 16px;
+  gap: 12px;
+  max-width: 680px;
+  box-shadow: var(--shadow-md);
+}
+
+.searchIcon { color: var(--text-muted); flex-shrink: 0; }
+
+.searchInput {
+  flex: 1;
+  background: none;
+  border: none;
+  outline: none;
+  color: var(--text-primary);
+  font-size: 15px;
+}
+.searchInput::placeholder { color: var(--text-muted); }
+
+.filterToggle {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 14px;
+  border-radius: var(--radius-lg);
+  background: var(--bg-elevated);
+  border: 1px solid var(--border-default);
+  color: var(--text-secondary);
+  font-size: 13px;
+  font-weight: 500;
+  cursor: pointer;
+  position: relative;
+  transition: all var(--transition-fast);
+  flex-shrink: 0;
+}
+.filterToggle:hover { color: var(--text-primary); border-color: var(--border-strong); }
+.filterDot {
+  position: absolute;
+  top: 4px; right: 4px;
+  width: 7px; height: 7px;
+  background: var(--accent-primary);
+  border-radius: 50%;
+}
+
+.specTabs {
+  display: flex;
+  gap: 8px;
+  overflow-x: auto;
+  padding: 24px 0 16px;
+  scrollbar-width: none;
+}
+.specTabs::-webkit-scrollbar { display: none; }
+
+.specTab {
+  padding: 8px 16px;
+  border-radius: var(--radius-full);
+  font-size: 13px;
+  font-weight: 500;
+  background: var(--bg-elevated);
+  border: 1px solid var(--border-default);
+  color: var(--text-secondary);
+  white-space: nowrap;
+  cursor: pointer;
+  transition: all var(--transition-fast);
+}
+.specTab:hover { color: var(--text-primary); }
+.specTabActive {
+  background: rgba(0, 245, 160, 0.1);
+  border-color: rgba(0, 245, 160, 0.3);
+  color: var(--accent-primary);
+}
+
+.filtersPanel {
+  background: var(--bg-card);
+  border: 1px solid var(--border-default);
+  border-radius: var(--radius-xl);
+  padding: var(--space-5);
+  margin-bottom: 20px;
+  overflow: hidden;
+}
+
+.filtersGrid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+  margin-bottom: 16px;
+}
+
+.checkLabel {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 14px;
+  color: var(--text-secondary);
+  cursor: pointer;
+  padding-top: 28px;
+}
+
+.checkbox {
+  width: 16px; height: 16px;
+  accent-color: var(--accent-primary);
+}
+
+.resultsHeader { display: flex; align-items: center; justify-content: space-between; margin-bottom: 20px; }
+.resultsCount { font-size: 14px; color: var(--text-secondary); }
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+  padding-bottom: 40px;
+}
+
+/* Doctor Card */
+.doctorCard {
+  background: var(--bg-card);
+  border: 1px solid var(--border-default);
+  border-radius: var(--radius-xl);
+  padding: var(--space-5);
+  transition: border-color var(--transition-base), box-shadow var(--transition-base);
+}
+.doctorCard:hover { border-color: var(--border-accent); box-shadow: var(--shadow-glow); }
+
+.cardHeader {
+  display: flex;
+  gap: var(--space-3);
+  margin-bottom: var(--space-4);
+  position: relative;
+}
+
+.avatar {
+  width: 64px; height: 64px;
+  border-radius: var(--radius-lg);
+  object-fit: cover;
+  flex-shrink: 0;
+  border: 2px solid var(--border-accent);
+}
+.avatarSkeleton { width: 64px; height: 64px; border-radius: var(--radius-lg); flex-shrink: 0; }
+
+.headerInfo { flex: 1; min-width: 0; }
+.doctorName { font-size: 16px; font-weight: 700; margin-bottom: 3px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.specialization { font-size: 13px; color: var(--accent-secondary); font-weight: 500; margin-bottom: 4px; }
+.location { display: flex; align-items: center; gap: 4px; font-size: 12px; color: var(--text-muted); }
+
+.verifiedBadge {
+  position: absolute;
+  top: 0; right: 0;
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--accent-primary);
+  background: rgba(0, 245, 160, 0.1);
+  padding: 3px 8px;
+  border-radius: var(--radius-full);
+  border: 1px solid rgba(0, 245, 160, 0.2);
+}
+
+.cardMeta {
+  display: flex;
+  align-items: center;
+  gap: var(--space-4);
+  margin-bottom: var(--space-3);
+  flex-wrap: wrap;
+}
+
+.starRow { display: flex; align-items: center; gap: 4px; }
+.ratingValue { font-size: 13px; font-weight: 600; color: var(--text-primary); }
+.ratingCount { font-size: 12px; color: var(--text-muted); }
+
+.experience, .telemedicine {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 12px;
+  color: var(--text-muted);
+}
+.telemedicine { color: var(--accent-secondary); }
+
+.bio { font-size: 13px; color: var(--text-secondary); line-height: 1.5; margin-bottom: var(--space-4); min-height: 40px; }
+
+.cardFooter { display: flex; align-items: center; justify-content: space-between; gap: var(--space-3); flex-wrap: wrap; }
+
+.fee { font-size: 18px; font-weight: 800; color: var(--accent-primary); }
+.feePer { font-size: 12px; color: var(--text-muted); }
+.cardActions { display: flex; gap: 8px; }
+
+/* Pagination */
+.pagination {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-4);
+  padding: 40px 0;
+}
+.pageInfo { font-size: 14px; color: var(--text-secondary); }
+
+@media (max-width: 1024px) { .grid { grid-template-columns: repeat(2, 1fr); } .filtersGrid { grid-template-columns: repeat(2, 1fr); } }
+@media (max-width: 640px) { .grid { grid-template-columns: 1fr; } .filtersGrid { grid-template-columns: 1fr; } }

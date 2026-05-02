@@ -1,0 +1,225 @@
+.page { display: flex; flex-direction: column; gap: var(--space-6); }
+
+.header { display: flex; align-items: center; gap: var(--space-4); }
+.backBtn {
+  display: flex; align-items: center; gap: 5px;
+  background: none; border: none; color: var(--text-secondary);
+  font-size: 13px; cursor: pointer; padding: 6px 0;
+  transition: color var(--transition-fast);
+}
+.backBtn:hover { color: var(--text-primary); }
+.title { font-size: 22px; font-weight: 800; }
+
+/* Progress */
+.progress {
+  display: flex;
+  align-items: center;
+  gap: 0;
+  padding: var(--space-5) var(--space-6);
+  background: var(--bg-card);
+  border: 1px solid var(--border-default);
+  border-radius: var(--radius-xl);
+}
+
+.progressStep { display: flex; align-items: center; flex: 1; }
+.progressStep:last-child { flex: none; }
+
+.progressDot {
+  width: 28px; height: 28px;
+  border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 12px; font-weight: 700;
+  background: var(--bg-elevated);
+  border: 2px solid var(--border-default);
+  color: var(--text-muted);
+  flex-shrink: 0;
+  transition: all var(--transition-base);
+}
+.active {
+  background: rgba(0, 245, 160, 0.1);
+  border-color: var(--accent-primary);
+  color: var(--accent-primary);
+}
+.done {
+  background: var(--accent-primary);
+  border-color: var(--accent-primary);
+  color: var(--text-inverse);
+}
+
+.progressLabel {
+  font-size: 12px; font-weight: 500; color: var(--text-muted);
+  margin-left: 8px; white-space: nowrap;
+}
+.progressLabelActive { color: var(--text-primary); }
+
+.progressLine { flex: 1; height: 2px; background: var(--border-subtle); margin: 0 8px; }
+.progressLineDone { background: var(--accent-primary); }
+
+.layout { display: grid; grid-template-columns: 1fr 300px; gap: 20px; align-items: start; }
+.main {}
+
+.stepTitle {
+  display: flex; align-items: center; gap: var(--space-3);
+  font-size: 18px; font-weight: 700; margin-bottom: var(--space-6);
+}
+
+/* Week navigation */
+.weekNav { display: flex; align-items: center; gap: var(--space-3); margin-bottom: var(--space-6); }
+.weekBtn {
+  width: 36px; height: 36px;
+  display: flex; align-items: center; justify-content: center;
+  border-radius: var(--radius-full);
+  background: var(--bg-elevated);
+  border: 1px solid var(--border-default);
+  color: var(--text-secondary);
+  cursor: pointer;
+  transition: all var(--transition-fast);
+  flex-shrink: 0;
+}
+.weekBtn:hover:not(:disabled) { color: var(--text-primary); border-color: var(--border-strong); }
+.weekBtn:disabled { opacity: 0.4; cursor: not-allowed; }
+
+.weekDays { display: flex; gap: 6px; flex: 1; overflow-x: auto; scrollbar-width: none; }
+.weekDays::-webkit-scrollbar { display: none; }
+
+.dayBtn {
+  display: flex; flex-direction: column; align-items: center; gap: 2px;
+  padding: 10px 12px;
+  border-radius: var(--radius-lg);
+  background: var(--bg-elevated);
+  border: 1px solid var(--border-default);
+  color: var(--text-secondary);
+  cursor: pointer;
+  transition: all var(--transition-fast);
+  flex-shrink: 0;
+  min-width: 58px;
+}
+.dayBtn:hover { border-color: var(--border-strong); color: var(--text-primary); }
+.dayBtnActive {
+  background: rgba(0, 245, 160, 0.1);
+  border-color: rgba(0, 245, 160, 0.3);
+  color: var(--accent-primary);
+}
+
+.dayName { font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em; }
+.dayNum { font-size: 18px; font-weight: 800; }
+.dayMonth { font-size: 10px; color: inherit; opacity: 0.7; }
+
+/* Time Slots */
+.slotTitle {
+  display: flex; align-items: center; gap: 8px;
+  font-size: 14px; font-weight: 600; color: var(--text-secondary);
+  margin-bottom: var(--space-4);
+}
+
+.slotsGrid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 8px; margin-bottom: var(--space-6); }
+
+.slot {
+  padding: 10px 6px;
+  border-radius: var(--radius-md);
+  background: var(--bg-elevated);
+  border: 1px solid var(--border-default);
+  color: var(--text-secondary);
+  font-size: 13px; font-weight: 500;
+  cursor: pointer;
+  transition: all var(--transition-fast);
+  text-align: center;
+}
+.slot:hover:not(:disabled) { border-color: var(--accent-primary); color: var(--text-primary); }
+.slotActive {
+  background: rgba(0, 245, 160, 0.1) !important;
+  border-color: var(--accent-primary) !important;
+  color: var(--accent-primary) !important;
+}
+.slotTaken { opacity: 0.3; cursor: not-allowed; text-decoration: line-through; }
+.slotSkeleton { height: 40px; border-radius: var(--radius-md); }
+.noSlots { color: var(--text-muted); font-size: 14px; padding: 20px 0; text-align: center; }
+
+/* Type Selector */
+.typeSelector { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: var(--space-6); }
+.typeBtn {
+  display: flex; flex-direction: column; align-items: center; gap: 4px;
+  padding: var(--space-5);
+  border-radius: var(--radius-xl);
+  background: var(--bg-elevated);
+  border: 2px solid var(--border-default);
+  color: var(--text-secondary);
+  cursor: pointer;
+  transition: all var(--transition-fast);
+  font-size: 15px; font-weight: 600;
+}
+.typeBtn:hover { border-color: var(--border-strong); }
+.typeBtnActive {
+  background: rgba(0, 245, 160, 0.08);
+  border-color: rgba(0, 245, 160, 0.4);
+  color: var(--accent-primary);
+}
+.typeSub { font-size: 12px; font-weight: 400; color: var(--text-muted); }
+
+.stepActions { display: flex; justify-content: flex-end; gap: 10px; margin-top: var(--space-6); padding-top: var(--space-5); border-top: 1px solid var(--border-subtle); }
+
+/* Payment */
+.paymentSummary {
+  background: var(--bg-elevated);
+  border-radius: var(--radius-lg);
+  padding: var(--space-5);
+  margin-bottom: var(--space-5);
+}
+.paymentRow { display: flex; justify-content: space-between; font-size: 14px; color: var(--text-secondary); padding: 6px 0; }
+.paymentTotal { font-size: 16px; font-weight: 700; color: var(--text-primary); border-top: 1px solid var(--border-subtle); margin-top: 8px; padding-top: 12px; }
+
+.paymentForm {}
+.cardElementWrap {
+  padding: 14px 16px;
+  background: var(--bg-elevated);
+  border: 1px solid var(--border-default);
+  border-radius: var(--radius-lg);
+  margin-bottom: 16px;
+}
+.secureNote { text-align: center; font-size: 12px; color: var(--text-muted); margin-top: 10px; }
+
+/* Confirm */
+.confirmCard { text-align: center; padding: 48px; }
+.confirmIcon {
+  width: 72px; height: 72px;
+  border-radius: 50%;
+  background: rgba(0, 245, 160, 0.12);
+  border: 2px solid rgba(0, 245, 160, 0.3);
+  display: flex; align-items: center; justify-content: center;
+  color: var(--accent-primary);
+  margin: 0 auto 24px;
+}
+.confirmTitle { font-size: 26px; font-weight: 800; margin-bottom: 12px; }
+.confirmSubtitle { font-size: 15px; color: var(--text-secondary); margin-bottom: 12px; line-height: 1.6; }
+
+/* Sidebar */
+.sidebar { position: sticky; top: 20px; }
+.sidebarLabel { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.07em; color: var(--text-muted); margin-bottom: 16px; }
+.docSummary { display: flex; align-items: center; gap: var(--space-3); margin-bottom: 20px; }
+.docAvatar { width: 52px; height: 52px; border-radius: var(--radius-lg); object-fit: cover; border: 2px solid var(--border-accent); }
+.docName { font-size: 15px; font-weight: 700; }
+.docSpec { font-size: 13px; color: var(--accent-secondary); }
+
+.selectedSlotInfo {
+  display: flex; flex-direction: column; gap: 8px;
+  padding: 14px; border-radius: var(--radius-lg);
+  background: var(--bg-elevated);
+  border: 1px solid var(--border-default);
+  margin-bottom: 16px;
+}
+.slotInfoRow { display: flex; align-items: center; gap: 8px; font-size: 13px; color: var(--text-secondary); }
+
+.feeSummary {
+  display: flex; align-items: center; justify-content: space-between;
+  padding-top: 16px; border-top: 1px solid var(--border-subtle);
+}
+
+@media (max-width: 900px) {
+  .layout { grid-template-columns: 1fr; }
+  .sidebar { position: static; order: -1; }
+}
+@media (max-width: 600px) {
+  .progress { padding: var(--space-4); gap: 4px; }
+  .progressLabel { display: none; }
+  .slotsGrid { grid-template-columns: repeat(4, 1fr); }
+}

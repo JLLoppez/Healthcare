@@ -1,0 +1,118 @@
+/* DoctorProfilePage.module.css */
+.page { min-height: 100vh; padding-top: var(--nav-height); padding-bottom: 80px; }
+
+.heroBg {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  height: 400px;
+  background: radial-gradient(ellipse at 50% -20%, rgba(0,245,160,0.06) 0%, transparent 60%);
+  pointer-events: none;
+  z-index: 0;
+}
+
+.container { position: relative; z-index: 1; padding-top: 32px; }
+
+.backBtn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 13px;
+  color: var(--text-secondary);
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 6px 0;
+  margin-bottom: 24px;
+  transition: color var(--transition-fast);
+}
+.backBtn:hover { color: var(--text-primary); }
+
+.layout { display: grid; grid-template-columns: 1fr 320px; gap: 24px; align-items: start; }
+.main { display: flex; flex-direction: column; gap: 16px; }
+
+.headerCard { display: flex; gap: var(--space-6); align-items: flex-start; }
+
+.avatar {
+  width: 120px; height: 120px;
+  border-radius: var(--radius-xl);
+  object-fit: cover;
+  flex-shrink: 0;
+  border: 3px solid var(--border-accent);
+}
+
+.headerInfo { flex: 1; }
+.headerTop { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 10px; }
+.doctorName { font-size: 26px; font-weight: 800; letter-spacing: -0.01em; margin-bottom: 4px; }
+.specialization { font-size: 15px; color: var(--accent-secondary); font-weight: 600; }
+
+.verifiedBadge {
+  display: flex; align-items: center; gap: 5px;
+  font-size: 12px; font-weight: 700;
+  color: var(--accent-primary);
+  background: rgba(0, 245, 160, 0.1);
+  border: 1px solid rgba(0, 245, 160, 0.2);
+  padding: 6px 12px;
+  border-radius: var(--radius-full);
+  flex-shrink: 0;
+}
+
+.hospital { display: flex; align-items: center; gap: 5px; font-size: 13px; color: var(--text-muted); margin-bottom: 12px; }
+
+.ratingRow { display: flex; align-items: center; gap: 8px; margin-bottom: 16px; }
+.ratingValue { font-size: 18px; font-weight: 800; color: var(--text-primary); }
+.ratingCount { font-size: 13px; color: var(--text-muted); }
+
+.stats { display: flex; align-items: center; gap: 24px; margin-bottom: 16px; }
+.statItem { text-align: center; }
+.statNum { display: block; font-family: var(--font-display); font-size: 22px; font-weight: 800; color: var(--accent-primary); }
+.statLab { font-size: 11px; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.05em; }
+.statDivider { width: 1px; height: 36px; background: var(--border-subtle); }
+
+.tags { display: flex; flex-wrap: wrap; gap: 8px; }
+.tag {
+  display: inline-flex; align-items: center; gap: 4px;
+  font-size: 12px; color: var(--text-secondary);
+  background: var(--bg-elevated);
+  border: 1px solid var(--border-default);
+  padding: 4px 10px; border-radius: var(--radius-full);
+}
+
+/* Tabs */
+.tabs { display: flex; gap: 4px; background: var(--bg-card); border: 1px solid var(--border-default); border-radius: var(--radius-xl); padding: 6px; }
+.tab {
+  display: flex; align-items: center; gap: 6px;
+  flex: 1; padding: 10px; border-radius: var(--radius-lg);
+  font-size: 14px; font-weight: 500; color: var(--text-secondary);
+  background: none; border: none; cursor: pointer; justify-content: center;
+  transition: all var(--transition-fast);
+}
+.tab:hover { color: var(--text-primary); }
+.tabActive { background: var(--bg-elevated); color: var(--text-primary) !important; }
+
+.tabContent { display: flex; flex-direction: column; gap: 12px; }
+
+/* Reviews */
+.reviewCard { margin-bottom: 0; }
+.reviewHeader { display: flex; align-items: center; gap: var(--space-3); margin-bottom: 12px; }
+.reviewAvatar { width: 36px; height: 36px; border-radius: 50%; object-fit: cover; }
+.doctorResponse {
+  margin-top: 12px; padding: 12px; border-radius: var(--radius-lg);
+  background: rgba(0, 245, 160, 0.05); border: 1px solid rgba(0, 245, 160, 0.15);
+}
+
+/* Booking Sidebar */
+.sidebar { position: sticky; top: calc(var(--nav-height) + 20px); }
+.bookCard {}
+.feeRow { display: flex; align-items: baseline; gap: 6px; margin-bottom: 20px; }
+.fee { font-family: var(--font-display); font-size: 32px; font-weight: 800; color: var(--accent-primary); }
+
+.availInfo { display: flex; flex-direction: column; gap: 10px; margin-bottom: 20px; }
+.availItem { display: flex; align-items: center; gap: 8px; font-size: 14px; color: var(--text-secondary); }
+
+.bookActions { display: flex; flex-direction: column; gap: 10px; }
+
+@media (max-width: 900px) {
+  .layout { grid-template-columns: 1fr; }
+  .sidebar { position: static; }
+  .headerCard { flex-direction: column; }
+}

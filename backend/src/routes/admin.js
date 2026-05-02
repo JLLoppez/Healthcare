@@ -1,0 +1,10 @@
+const express = require('express');
+const router = express.Router();
+const { protect, authorize } = require('../middleware/auth');
+const { adminController: ac } = require('../controllers/otherControllers');
+router.use(protect, authorize('admin'));
+router.get('/stats', ac.getDashboardStats);
+router.get('/users', ac.getUsers);
+router.patch('/users/:id/toggle-active', ac.toggleUserActive);
+router.put('/doctors/:id/verify', ac.verifyDoctor);
+module.exports = router;
