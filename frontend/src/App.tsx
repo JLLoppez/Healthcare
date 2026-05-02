@@ -44,10 +44,6 @@ const queryClient = new QueryClient({
   },
 });
 
-<div style={{ color: "red" }}>
-  API URL: {import.meta.env.VITE_API_URL}
-</div>
-
 // Route Guards
 const PrivateRoute = ({ children, roles }: { children: React.ReactNode; roles?: string[] }) => {
   const { user, token } = useAuthStore();
